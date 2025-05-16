@@ -26,6 +26,24 @@ export default function Layout() {
           ),
         }}
       />
+      <Stack.Screen
+        name="login"
+        options={{
+          title: "이메일 로그인",
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerBackButtonDisplayMode: "minimal",
+        }}
+      />
+      <Stack.Screen
+        name="signup"
+        options={{
+          title: "회원가입",
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerBackButtonDisplayMode: "minimal",
+        }}
+      />
     </Stack>
   );
 }
