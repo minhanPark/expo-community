@@ -1,20 +1,37 @@
-import FixedButtonCTA from "@/components/fixed-bitton-cta";
-import InputField from "@/components/input-field";
+import { FormProvider, useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
 
+import EmailInput from "@/components/email-input";
+import FixedButtonCTA from "@/components/fixed-bitton-cta";
+import PasswordInput from "@/components/password-input";
+
+type FormValues = {
+  email: string;
+  password: string;
+};
+
 export default function Page() {
+  const signupForm = useForm<FormValues>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = (formValues: FormValues) => {
+    console.log("formValues", formValues);
+  };
   return (
-    <>
+    <FormProvider {...signupForm}>
       <View style={styles.container}>
-        <InputField label="이메일" placeholder="이메일을 입력해주세요." />
-        <InputField
-          label="비밀번호"
-          placeholder="비밀번호를 입력해주세요."
-          secureTextEntry={true}
-        />
+        <EmailInput />
+        <PasswordInput />
       </View>
-      <FixedButtonCTA label="로그인 하기" onPress={() => {}} />
-    </>
+      <FixedButtonCTA
+        label="로그인 하기"
+        onPress={signupForm.handleSubmit(onSubmit)}
+      />
+    </FormProvider>
   );
 }
 

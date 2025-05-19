@@ -4,6 +4,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Octicons from "@expo/vector-icons/Octicons";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import Profile from "./profile";
 
 type Props = {
   post: Post;
@@ -14,6 +15,12 @@ export default function FeedItem({ post }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
+        <Profile
+          imageUri={post.author.imageUri}
+          nickname={post.author.nickname}
+          createdAt={post.createdAt}
+          onPress={() => {}}
+        />
         <Text style={styles.title}>{post.title}</Text>
         <Text numberOfLines={3} style={styles.description}>
           {post.description}
