@@ -14,6 +14,9 @@ export default function PasswordInput() {
           value={value}
           onChangeText={onChange}
           secureTextEntry={true}
+          // ios에서는 키보드와 시스템에 사용자가 입력하는 콘텐츠에 대해 예상되는 의미론적 정보를 제공하는데
+          // 원타임 코드를 통해서 안나타나게 하는 것
+          textContentType="oneTimeCode"
         />
       )}
     />
