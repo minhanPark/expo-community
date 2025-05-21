@@ -5,6 +5,7 @@ import EmailInput from "@/components/email-input";
 import FixedButtonCTA from "@/components/fixed-bitton-cta";
 import PasswordConfirmInput from "@/components/password-confirm-input";
 import PasswordInput from "@/components/password-input";
+import { useAuth } from "@/hooks/queries/useAuth";
 
 type FormValues = {
   email: string;
@@ -13,6 +14,7 @@ type FormValues = {
 };
 
 export default function Page() {
+  const { signupmutation } = useAuth();
   const signupForm = useForm<FormValues>({
     defaultValues: {
       email: "",
@@ -22,7 +24,10 @@ export default function Page() {
   });
 
   const onSubmit = (formValues: FormValues) => {
-    console.log("formValues", formValues);
+    signupmutation.mutate({
+      email: formValues.email,
+      password: formValues.password,
+    });
   };
   return (
     <FormProvider {...signupForm}>
