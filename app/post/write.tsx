@@ -34,6 +34,8 @@ export default function Page() {
   );
 
   useEffect(() => {
+    // 페이지 내에서 네비게이션의 옵션을 다루려면 여기서 navigation.setOptions 사용할 수 있다.
+    // 글 저장 버튼을 헤더에 넣으려고 이렇게 작성함
     navigation.setOptions({
       headerRight: () => (
         <CustomButton
