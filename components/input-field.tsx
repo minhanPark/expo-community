@@ -12,10 +12,11 @@ type Props = TextInputProps & {
   label?: string;
   variant?: "filled" | "standard" | "outlined";
   error?: string;
+  rightChild?: React.ReactNode;
 };
 
 function InputField(
-  { label, variant = "filled", error, ...rest }: Props,
+  { label, variant = "filled", error, rightChild = null, ...rest }: Props,
   ref?: ForwardedRef<TextInput>
 ) {
   return (
@@ -34,6 +35,7 @@ function InputField(
           style={styles.input}
           {...rest}
         />
+        {rightChild}
       </View>
       {Boolean(error) && <Text style={styles.error}>{error}</Text>}
     </View>

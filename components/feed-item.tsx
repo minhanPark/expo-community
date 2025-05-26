@@ -12,9 +12,10 @@ import Profile from "./profile";
 
 type Props = {
   post: Post;
+  isDetail?: boolean;
 };
 
-export default function FeedItem({ post }: Props) {
+export default function FeedItem({ post, isDetail = false }: Props) {
   const { auth } = useAuth();
   const likes = post.likes?.map((like) => Number(like.userId));
   const isLiked = likes?.includes(Number(auth.id));
@@ -44,8 +45,16 @@ export default function FeedItem({ post }: Props) {
       }
     );
   };
+
+  const handlePressFeed = () => {
+    if (!isDetail) {
+      router.push(`/post/${post.id}`);
+    }
+  };
+
+  const ContainerComponent = isDetail ? View : Pressable;
   return (
-    <View style={styles.container}>
+    <ContainerComponent style={styles.container} onPress={handlePressFeed}>
       <View style={styles.contentContainer}>
         <Profile
           imageUri={post.author.imageUri}
@@ -92,7 +101,7 @@ export default function FeedItem({ post }: Props) {
           <Text style={styles.menuText}>{post.viewCount}</Text>
         </Pressable>
       </View>
-    </View>
+    </ContainerComponent>
   );
 }
 

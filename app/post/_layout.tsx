@@ -39,6 +39,24 @@ export default function Layout() {
           ),
         }}
       />
+      <Stack.Screen
+        name="[id]"
+        options={{
+          title: "게시글",
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerLeft: () => (
+            // 매직 버튼 구현방법
+            <Pressable
+              onPress={() =>
+                router.canGoBack() ? router.back() : router.replace("/")
+              }
+            >
+              <Feather name="arrow-left" size={28} color={colors.BLACK} />
+            </Pressable>
+          ),
+        }}
+      />
     </Stack>
   );
 }
