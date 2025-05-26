@@ -5,13 +5,17 @@ import { Stack } from "expo-router";
 import { useEffect } from "react";
 // 안드로이드에서만 사용할 수 있는 토스트가 제공되지만 ios도 공통적으로 사용하려고 아래 라이브러리 설치
 import Toast from "react-native-toast-message";
+// 기본적으로 제공되는 ActionSheet는 ios에서만 있어서 공통적으로 사용할 수 있는 action sheet를 설치
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 
 export default function RootLayout() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <RootNavigation />
-      <Toast />
-    </QueryClientProvider>
+    <ActionSheetProvider>
+      <QueryClientProvider client={queryClient}>
+        <RootNavigation />
+        <Toast />
+      </QueryClientProvider>
+    </ActionSheetProvider>
   );
 }
 
