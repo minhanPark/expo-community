@@ -1,5 +1,6 @@
 import { queryClient } from "@/api/queryClient";
 import { useAuth } from "@/hooks/queries/useAuth";
+import { useReactQueryDevTools } from "@dev-plugins/react-query";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { useEffect } from "react";
@@ -9,6 +10,7 @@ import Toast from "react-native-toast-message";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 
 export default function RootLayout() {
+  useReactQueryDevTools(queryClient);
   return (
     <ActionSheetProvider>
       <QueryClientProvider client={queryClient}>
