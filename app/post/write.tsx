@@ -1,5 +1,7 @@
 import CustomButton from "@/components/custom-button";
 import DescriptionInput from "@/components/description-input";
+import ImagePreviewList from "@/components/image-preview-list";
+import PostWriteFooter from "@/components/post-write-footer";
 import TitleInput from "@/components/title-input";
 import useCreatePost from "@/hooks/queries/useCreatePost";
 import { ImageUri } from "@/types";
@@ -32,6 +34,7 @@ export default function Page() {
     },
     [createPost]
   );
+  console.log("postForm", postForm.watch().imageUris);
 
   useEffect(() => {
     // 페이지 내에서 네비게이션의 옵션을 다루려면 여기서 navigation.setOptions 사용할 수 있다.
@@ -54,7 +57,9 @@ export default function Page() {
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <TitleInput />
         <DescriptionInput />
+        <ImagePreviewList imageUris={postForm.watch().imageUris} />
       </KeyboardAwareScrollView>
+      <PostWriteFooter />
     </FormProvider>
   );
 }
