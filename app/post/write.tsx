@@ -3,8 +3,10 @@ import DescriptionInput from "@/components/description-input";
 import ImagePreviewList from "@/components/image-preview-list";
 import PostWriteFooter from "@/components/post-write-footer";
 import TitleInput from "@/components/title-input";
+import VoteAttached from "@/components/vote-attached";
+import VoteModal from "@/components/vote-modal";
 import useCreatePost from "@/hooks/queries/useCreatePost";
-import { ImageUri } from "@/types";
+import { ImageUri, VoteOption } from "@/types";
 import { useNavigation } from "expo-router";
 import { useCallback, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -15,6 +17,9 @@ type FormValues = {
   title: string;
   description: string;
   imageUris: ImageUri[];
+  isVoteOpen: boolean;
+  voteOptions: VoteOption[];
+  isVoteAttached: boolean;
 };
 
 export default function Page() {
@@ -25,6 +30,9 @@ export default function Page() {
       title: "",
       description: "",
       imageUris: [],
+      isVoteOpen: false,
+      isVoteAttached: false,
+      voteOptions: [{ displayPriority: 0, content: "" }],
     },
   });
 
@@ -57,9 +65,11 @@ export default function Page() {
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <TitleInput />
         <DescriptionInput />
+        <VoteAttached />
         <ImagePreviewList imageUris={postForm.watch().imageUris} />
       </KeyboardAwareScrollView>
       <PostWriteFooter />
+      <VoteModal />
     </FormProvider>
   );
 }

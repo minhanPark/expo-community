@@ -26,6 +26,7 @@ export default function ImagePreviewList({ imageUris = [] }: Props) {
             ? "http://localhost:3030"
             : "http://10.0.2.2:3030"
         }/${uri}`;
+        console.log("Image URI:", imageUri);
         return (
           <Pressable key={uri + index} style={styles.imageContainer}>
             <Image style={styles.image} source={{ uri: imageUri }} />

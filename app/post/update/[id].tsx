@@ -1,6 +1,7 @@
 import CustomButton from "@/components/custom-button";
 import DescriptionInput from "@/components/description-input";
 import TitleInput from "@/components/title-input";
+import VoteAttached from "@/components/vote-attached";
 import useGetPost from "@/hooks/queries/useGetPost";
 import useUpdatePost from "@/hooks/queries/useUpdatePost";
 import { ImageUri } from "@/types";
@@ -13,6 +14,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 type FormValues = {
   title: string;
   description: string;
+  isVoteAttached: boolean;
   imageUris: ImageUri[];
 };
 
@@ -26,6 +28,7 @@ export default function Page() {
     values: {
       title: post?.title || "",
       description: post?.description || "",
+      isVoteAttached: post?.hasVote || false,
       imageUris: post?.imageUris || [],
     },
   });
@@ -65,6 +68,7 @@ export default function Page() {
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <TitleInput />
         <DescriptionInput />
+        <VoteAttached />
       </KeyboardAwareScrollView>
     </FormProvider>
   );
