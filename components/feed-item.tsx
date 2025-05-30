@@ -9,6 +9,7 @@ import Octicons from "@expo/vector-icons/Octicons";
 import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Profile from "./profile";
+import Vote from "./vote";
 
 type Props = {
   post: Post;
@@ -78,6 +79,28 @@ export default function FeedItem({ post, isDetail = false }: Props) {
         <Text numberOfLines={3} style={styles.description}>
           {post.description}
         </Text>
+        {!isDetail && post.hasVote && (
+          <View style={styles.voteContainer}>
+            <View style={styles.voteTextContainer}>
+              <MaterialCommunityIcons
+                name="vote"
+                size={24}
+                color={colors.ORANGE_600}
+              />
+              <Text style={styles.voteText}>투표</Text>
+            </View>
+            <Text style={styles.voteCountText}>
+              {post.voteCount}명 참여중...
+            </Text>
+          </View>
+        )}
+        {isDetail && post.hasVote && (
+          <Vote
+            postId={post.id}
+            postVotes={post.votes ?? []}
+            voteCount={post.voteCount}
+          />
+        )}
       </View>
       <View style={styles.menuContainer}>
         <Pressable style={styles.menu}>
@@ -148,5 +171,28 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 500,
     color: colors.ORANGE_600,
+  },
+  voteContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 14,
+    gap: 16,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: colors.ORANGE_600,
+    backgroundColor: colors.ORANGE_100,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+  },
+  voteTextContainer: {
+    gap: 6,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  voteText: {},
+  voteCountText: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: colors.BLACK,
   },
 });
