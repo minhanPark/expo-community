@@ -1,10 +1,12 @@
 import { colors } from "@/constants";
 import { useAuth } from "@/hooks/queries/useAuth";
+import useCreateVote from "@/hooks/queries/useCreateVote";
 import { PostVote } from "@/types";
 import Feather from "@expo/vector-icons/Feather";
 import { Fragment, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import CustomButton from "./custom-button";
+import { VoteOption } from "./vote-option";
 
 type Props = {
   postId: number;
@@ -15,6 +17,15 @@ type Props = {
 export default function Vote({ postId, postVotes, voteCount }: Props) {
   const { auth } = useAuth();
   const [selectedId, setSelectedId] = useState<number>(0);
+  const createVote = useCreateVote();
+
+  const handleVote = () => {
+    createVote.mutate({
+      postId,
+      voteOptionId: Number(selectedId),
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.label}>
@@ -32,13 +43,22 @@ export default function Vote({ postId, postVotes, voteCount }: Props) {
         return (
           <Fragment key={vote.id}>
             {vote.options.map((option) => {
-              return <Text key={option.id}>{option.content}</Text>;
+              return (
+                <VoteOption
+                  key={option.id}
+                  isVoted={isVoted}
+                  isSelected={option.id === selectedId}
+                  onSelectOption={() => setSelectedId(Number(option.id))}
+                  option={option}
+                  totalCount={voteCount}
+                />
+              );
             })}
             {!isVoted && (
               <CustomButton
                 label="투표하기"
                 disabled={!selectedId}
-                onPress={() => {}}
+                onPress={handleVote}
               />
             )}
           </Fragment>

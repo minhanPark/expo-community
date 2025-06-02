@@ -1,6 +1,8 @@
 export const colors = {
   WHITE: "#FFF",
   ORANGE_100: "#FFF7F1",
+  ORANGE_200: "#FFDEC6",
+  ORANGE_300: "#FFB884",
   ORANGE_600: "#FF6B57",
   RED_100: "#FFDFDF",
   RED_500: "#FF6B57",
