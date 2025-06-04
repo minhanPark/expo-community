@@ -75,7 +75,12 @@ export function useAuth() {
   return {
     loginMutation,
     signupmutation,
-    auth: { id: data?.id || "", nickname: data?.nickname || "" },
+    auth: {
+      id: data?.id || "",
+      nickname: data?.nickname || "",
+      imageUri: data?.imageUri || "",
+      introduce: data?.introduce || "",
+    },
     logout,
   };
 }
