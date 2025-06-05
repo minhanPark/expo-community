@@ -1,30 +1,37 @@
 import AuthRoute from "@/components/auth-route";
-import CustomButton from "@/components/custom-button";
-import LikedFeedList from "@/components/liked-feed-list";
-import MyFeedList from "@/components/my-feed-list";
 import Tab from "@/components/tab";
+import UserFeedList from "@/components/user-feed-list";
 import { colors } from "@/constants";
 import { useAuth } from "@/hooks/queries/useAuth";
-import { router } from "expo-router";
-import { useRef, useState } from "react";
+import useGetUserProfile from "@/hooks/queries/useGetUserProfile";
+import { Redirect, useLocalSearchParams, useNavigation } from "expo-router";
+import { useEffect } from "react";
 import { Image, Platform, StyleSheet, Text, View } from "react-native";
-import PagerView from "react-native-pager-view";
 
 export default function Screen() {
+  const navigation = useNavigation();
+  const { id: userId } = useLocalSearchParams();
   const { auth } = useAuth();
-  const [currentTab, setCurrentTab] = useState(0);
-  const pagerRef = useRef<PagerView | null>(null);
+  const { data: profile } = useGetUserProfile(Number(userId));
+  const { nickname, introduce, imageUri } = profile || {};
 
-  const handlePressTab = (index: number) => {
-    pagerRef.current?.setPage(index);
-    setCurrentTab(index);
-  };
+  useEffect(() => {
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: colors.ORANGE_200,
+      },
+    });
+  }, [navigation]);
+
+  if (Number(userId) === Number(auth.id)) {
+    return <Redirect href="/my" />;
+  }
   return (
     <AuthRoute>
       <View style={styles.header}>
         <Image
           source={
-            auth.imageUri
+            imageUri
               ? {
                   uri: `${
                     Platform.OS === "ios"
@@ -36,38 +43,19 @@ export default function Screen() {
           }
           style={styles.avatar}
         />
-        <CustomButton
-          size="medium"
-          variant="outlined"
-          label="프로필 편집"
-          style={{ position: "absolute", right: 16, bottom: 16 }}
-          onPress={() => router.push("/profile/update")}
-        />
       </View>
       <View style={styles.container}>
         <View style={styles.profile}>
-          <Text style={styles.nickname}>{auth.nickname}</Text>
-          <Text style={styles.introduce}>{auth.introduce}</Text>
+          <Text style={styles.nickname}>{nickname}</Text>
+          <Text style={styles.introduce}>{introduce}</Text>
         </View>
       </View>
       <View style={styles.tabContainer}>
-        <Tab isActive={currentTab === 0} onPress={() => handlePressTab(0)}>
+        <Tab isActive onPress={() => {}}>
           게시물
         </Tab>
-        <Tab isActive={currentTab === 1} onPress={() => handlePressTab(1)}>
-          좋아한 게시물
-        </Tab>
       </View>
-      <PagerView
-        ref={pagerRef}
-        initialPage={0}
-        style={{ flex: 1 }}
-        onPageSelected={(e) => setCurrentTab(e.nativeEvent.position)}
-      >
-        {/* key를 입력해야 하는데 1/2로 한게 의도적인지(탭을 숫자로 넣었으니) 아닌지 모르겠음*/}
-        <MyFeedList key="1" />
-        <LikedFeedList key="2" />
-      </PagerView>
+      <UserFeedList userId={Number(userId)} />
     </AuthRoute>
   );
 }
@@ -77,11 +65,10 @@ const styles = StyleSheet.create({
     position: "relative",
     backgroundColor: colors.ORANGE_200,
     width: "100%",
-    height: 154,
+    height: 77,
   },
   avatar: {
     position: "absolute",
-    top: 77,
     left: 16,
     width: 154,
     height: 154,

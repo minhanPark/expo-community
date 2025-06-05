@@ -33,6 +33,7 @@ function InputField(
         <TextInput
           placeholderTextColor={colors.GRAY_500}
           style={[styles.input, styles[`${variant}Text`]]}
+          ref={ref}
           {...rest}
         />
         {rightChild}

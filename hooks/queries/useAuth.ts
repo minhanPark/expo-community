@@ -1,4 +1,4 @@
-import { getMe, postLogin, postSignup } from "@/api/auth";
+import { editProfile, getMe, postLogin, postSignup } from "@/api/auth";
 import { queryClient } from "@/api/queryClient";
 import { queryKeys } from "@/constants";
 import { removeHeader, setHeader } from "@/utils/header";
@@ -60,10 +60,20 @@ function useSignup() {
   });
 }
 
+function useUpdateProfile() {
+  return useMutation({
+    mutationFn: editProfile,
+    onSuccess: (newProfile) => {
+      queryClient.setQueryData([queryKeys.AUTH, queryKeys.GET_ME], newProfile);
+    },
+  });
+}
+
 export function useAuth() {
   const { data } = useGetMe();
   const loginMutation = useLogin();
   const signupmutation = useSignup();
+  const profileMutation = useUpdateProfile();
 
   const logout = () => {
     removeHeader("Authorization");
@@ -81,6 +91,7 @@ export function useAuth() {
       imageUri: data?.imageUri || "",
       introduce: data?.introduce || "",
     },
+    profileMutation,
     logout,
   };
 }
