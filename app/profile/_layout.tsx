@@ -43,6 +43,21 @@ export default function Layout() {
           ),
         }}
       />
+      <Stack.Screen
+        name="avatar"
+        options={{
+          headerShown: true,
+          headerTitle: "",
+          headerBackButtonDisplayMode: "minimal",
+          headerShadowVisible: false,
+          headerTitleAlign: "center",
+          headerLeft: () => (
+            <Pressable onPress={() => router.back()}>
+              <Feather name="arrow-left" size={28} color={colors.BLACK} />
+            </Pressable>
+          ),
+        }}
+      />
     </Stack>
   );
 }

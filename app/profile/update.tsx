@@ -4,6 +4,7 @@ import IntroduceInput from "@/components/introduce-input";
 import NicknameInput from "@/components/nickname-input";
 import { colors } from "@/constants";
 import { useAuth } from "@/hooks/queries/useAuth";
+import { router } from "expo-router";
 import { FormProvider, useForm } from "react-hook-form";
 import { Image, Platform, StyleSheet, View } from "react-native";
 import Toast from "react-native-toast-message";
@@ -54,7 +55,7 @@ export default function ProfileUpdate() {
             variant="outlined"
             label="아바타 변경"
             style={{ position: "absolute", right: 0, bottom: 0 }}
-            onPress={() => {}}
+            onPress={() => router.push("/profile/avatar")}
           />
         </View>
         <View style={styles.inputContainer}>
