@@ -43,7 +43,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: colors.GRAY_200,
   },
-  selectedContainer: {},
+  selectedContainer: {
+    borderColor: colors.ORANGE_600,
+  },
   image: {
     width: "100%",
     height: "100%",
