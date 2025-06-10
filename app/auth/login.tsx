@@ -5,6 +5,7 @@ import EmailInput from "@/components/email-input";
 import FixedButtonCTA from "@/components/fixed-bitton-cta";
 import PasswordInput from "@/components/password-input";
 import { useAuth } from "@/hooks/queries/useAuth";
+import usePushNotification from "@/hooks/queries/usePushNotification";
 
 type FormValues = {
   email: string;
@@ -13,6 +14,7 @@ type FormValues = {
 
 export default function Page() {
   const { loginMutation } = useAuth();
+  const { expoPushToken } = usePushNotification();
   const signupForm = useForm<FormValues>({
     defaultValues: {
       email: "",
@@ -25,8 +27,10 @@ export default function Page() {
     loginMutation.mutate({
       email,
       password,
+      expoPushToken,
     });
   };
+  console.log(expoPushToken);
   return (
     <FormProvider {...signupForm}>
       <View style={styles.container}>

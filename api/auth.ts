@@ -13,7 +13,7 @@ export async function postSignup(body: RequestUser): Promise<void> {
 }
 
 export async function postLogin(
-  body: RequestUser
+  body: RequestUser & { expoPushToken?: string }
 ): Promise<{ accessToken: string }> {
   const { data } = await axiosInstance.post("/auth/signin", body);
   return data;
