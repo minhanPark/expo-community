@@ -1,7 +1,9 @@
 import AuthRoute from "@/components/auth-route";
-import CustomButton from "@/components/custom-button";
+import ListItem from "@/components/list-item";
+import { colors } from "@/constants";
 import { useAuth } from "@/hooks/queries/useAuth";
-import { Text } from "react-native";
+import Octicons from "@expo/vector-icons/Octicons";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Page() {
@@ -9,9 +11,25 @@ export default function Page() {
   return (
     <AuthRoute>
       <SafeAreaView>
-        <Text>세팅</Text>
-        <CustomButton label="로그아웃" onPress={logout} />
+        <View style={styles.space} />
+        <ListItem
+          title="언어 설정"
+          onPress={logout}
+          icon={<Octicons name="table" size={16} color={colors.BLACK} />}
+        />
+        <View style={styles.space} />
+        <ListItem
+          title="로그아웃"
+          onPress={logout}
+          icon={<Octicons name="sign-out" size={16} color={colors.BLACK} />}
+        />
       </SafeAreaView>
     </AuthRoute>
   );
 }
+
+const styles = StyleSheet.create({
+  space: {
+    height: 30,
+  },
+});

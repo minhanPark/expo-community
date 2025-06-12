@@ -57,6 +57,12 @@ export default function Layout() {
           ),
         }}
       />
+      <Stack.Screen
+        name="search"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }
