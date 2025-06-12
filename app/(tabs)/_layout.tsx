@@ -1,8 +1,10 @@
 import { colors } from "@/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Tabs } from "expo-router";
+import { useTranslation } from "react-i18next";
 
 export default function Layout() {
+  const { t } = useTranslation();
   return (
     <Tabs
       screenOptions={{
@@ -13,7 +15,7 @@ export default function Layout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "홈",
+          title: t("Home"),
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
               name={focused ? "home-sharp" : "home-outline"}
@@ -26,7 +28,7 @@ export default function Layout() {
       <Tabs.Screen
         name="my"
         options={{
-          title: "내 프로필",
+          title: t("Profile"),
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
               name={focused ? "person-circle" : "person-circle-outline"}
@@ -39,7 +41,7 @@ export default function Layout() {
       <Tabs.Screen
         name="setting"
         options={{
-          title: "설정",
+          title: t("Settings"),
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
               name={focused ? "settings-sharp" : "settings-outline"}
